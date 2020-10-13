@@ -1,4 +1,4 @@
-﻿/* eslint-disable no-new */
+﻿/* eslint-disable */
 window.pinyin_dict_firstletter = {};
 
 pinyin_dict_firstletter.all =
