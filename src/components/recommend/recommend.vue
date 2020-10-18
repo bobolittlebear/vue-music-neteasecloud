@@ -37,8 +37,8 @@
 import Loading from 'base/loading/loading'
 import Scroll from 'base/scroll/scroll'
 import Slider from 'base/slider/slider'
-import {getRecommend, getDiscList} from 'api/recommend'
-import {CODE_OK} from 'api/config'
+import { getRecommend, getDiscList } from 'api/recommend'
+import { CODE_OK } from 'api/config'
 
 export default {
   created() {
@@ -47,88 +47,98 @@ export default {
     // this指向当前的vue app
   },
   data() {
-     return {
-       recommends: [],
-       discList: []
-     }
+    return {
+      recommends: [],
+      discList: [],
+    }
   },
   methods: {
     _getRecommend() {
       getRecommend().then((res) => {
-        if (res.code === CODE_OK){
-          this.recommends = res.banners;
+        if (res.code === CODE_OK) {
+          this.recommends = res.banners
         }
       })
     },
     _getDiscList() {
       getDiscList().then((res) => {
-        if(res.code === CODE_OK){
+        if (res.code === CODE_OK) {
           this.discList = res.playlists
         }
       })
     },
-    loadImage(){ //重新渲染，每张图片加载完毕都会重新计算srcoll的高度，但是需要计算多次，加标志位解决
-      if(!this.checkLoaded){
+    loadImage() {
+      //重新渲染，每张图片加载完毕都会重新计算srcoll的高度，但是需要计算多次，加标志位解决
+      if (!this.checkLoaded) {
         this.$refs.scroll.refresh()
         this.checkLoaded = true
       }
-    }
+    },
   },
   components: {
     Slider,
     Scroll,
-    Loading
-  }
+    Loading,
+  },
 }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-@import "~common/stylus/variable"
+@import '~common/stylus/variable'
 
 .recommend
-  position: fixed
-  width: 100%
-  top: 88px
-  bottom: 0
+  position fixed
+  width 100%
+  top 88px
+  bottom 0
+
   .recommend-content
-    height: 100%
-    overflow: hidden
+    height 100%
+    overflow hidden
+
     .slider-wrapper
-      position: relative
-      width: 100%
-      overflow: hidden
+      position relative
+      width 100%
+      overflow hidden
+
     .recommend-list
       .list-title
-        height: 65px
-        line-height: 65px
-        text-align: center
-        font-size: $font-size-medium
-        color: $color-theme
+        height 65px
+        line-height 65px
+        text-align center
+        font-size $font-size-medium
+        color $color-theme
+
       .item
-        display: flex
-        box-sizing: border-box
-        align-items: center
-        padding: 0 20px 20px 20px
+        display flex
+        box-sizing border-box
+        align-items center
+        padding 0 20px 20px 20px
+
         .icon
-          flex: 0 0 60px
-          width: 60px
-          padding-right: 20px
+          flex 0 0 60px
+          width 60px
+          padding-right 20px
+
         .text
-          display: flex
-          flex-direction: column
-          justify-content: center
-          flex: 1
-          line-height: 20px
-          overflow: hidden
-          font-size: $font-size-medium
+          display flex
+          flex-direction column
+          justify-content center
+          flex 1
+          line-height 20px
+          overflow hidden
+          font-size $font-size-medium
+
           .name
-            margin-bottom: 10px
-            color: $color-text
+            margin-bottom 10px
+            color $color-text
+
           .desc
-            color: $color-text-d
+            color $color-text-d
+
     .loading-container
-      position: absolute
-      width: 100%
-      top: 50%
-      transform: translateY(-50%)
+      position absolute
+      width 100%
+      top 50%
+      transform translateY(-50%)
 </style>

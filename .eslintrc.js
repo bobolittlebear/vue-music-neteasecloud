@@ -8,7 +8,7 @@ module.exports = {
   env: {
     browser: true,
     node: true,
-    es6: true
+    es6: true,
   },
   extends: ['plugin:vue/essential', 'plugin:prettier/recommended', 'eslint:recommended'],
   // required to lint *.vue files
@@ -23,9 +23,9 @@ module.exports = {
     'space-before-function-paren': 0,
     'eol-last': 0,
     'comma-dangle': 0,
-    'no-extra-semi': 0,
+    'no-extra-semi': 1,
     'no-console': 0,
     'no-unused-vars': 0,
     'vue/require-v-for-key': 0,
   },
-};
+}
