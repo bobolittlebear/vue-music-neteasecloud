@@ -26,12 +26,9 @@
 <script type="text/ecmascript-6">
 import Scroll from 'base/scroll/scroll'
 import SongList from 'base/song-list/song-list'
-import { prefixStyle } from 'common/js/dom'
 import { mapActions } from 'vuex'
 
 const RESERVE_HEIGHT = 40
-const transform = prefixStyle('transfrom')
-const backdrop = prefixStyle('backdrop-filter')
 
 export default {
   props: {
@@ -74,7 +71,7 @@ export default {
         blur = Math.min(20 * percent)
       }
       //下拉时，图片高斯模糊，仅ios端有此属性
-      this.$refs.filter.style[backdrop] = `blur(${blur})`
+      this.$refs.filter.style['backdrop-filter'] = `blur(${blur})`
       if (newY < this.minTranslateY) {
         zIndex = 10
         this.$refs.bgImage.style.paddingTop = 0
@@ -84,7 +81,7 @@ export default {
         this.$refs.bgImage.style.height = 0
       }
       this.$refs.bgImage.style.zIndex = zIndex
-      this.$refs.bgImage.style[transform] = `scale(${scale})`
+      this.$refs.bgImage.style['transform'] = `scale(${scale})`
     },
   },
   created() {

@@ -22,7 +22,7 @@ export function getData(el, name, val) {
   }
 }
 
-let elementStyle = document.createElement('div').style;
+let elementStyle = document.createElement('div').style
 
 let vendor = (() => {
   let transformNames = {
@@ -31,22 +31,22 @@ let vendor = (() => {
     O: 'OTransform',
     ms: 'msTransform',
     standard: 'transform',
-  };
+  }
 
   for (let key in transformNames) {
     if (elementStyle[transformNames[key] !== undefined]) {
-      return key;
+      return key
     }
   }
-  return false;
-})();
+  return false
+})()
 
 export function prefixStyle(style) {
   if (vendor === false) {
-    return false;
+    return false
   }
   if (vendor === 'standard') {
-    return style;
+    return style
   }
-  return vendor + style.charAt(0).toUpperCase + style.substr(1);
+  return vendor + style.charAt(0).toUpperCase + style.substr(1)
 }
