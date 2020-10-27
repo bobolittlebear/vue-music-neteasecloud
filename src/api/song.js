@@ -1,5 +1,6 @@
 import { NETEASE_API_URL } from './config'
 import moment from 'moment'
+import { get } from 'common/js/common'
 
 export default class Song {
   constructor({ id, singer, name, album, duration, image, url }) {
@@ -34,4 +35,8 @@ function filterSinger(singer) {
     ret.push(s.name)
   })
   return ret.join('/')
+}
+
+export function getSongUrl(url) {
+  return get(url)
 }

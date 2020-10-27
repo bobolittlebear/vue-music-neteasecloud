@@ -49,6 +49,7 @@
       </div>
     </transition>
     <audio ref="audio" :src="currentSong.url"></audio>
+    <audio ref="audio" :src="currentSongUrl"></audio>
     <div class="mini-player" v-show="!fullScreen" @click="open">
       <div class="icon">
         <img width="40" height="40" :src="currentSong.image" />
@@ -68,10 +69,21 @@
 <script type="text/ecmascript-6">
 import { mapGetters, mapMutations } from 'vuex'
 import animations from 'create-keyframe-animation'
+import { getSongUrl } from 'api/song'
+import { CODE_OK } from 'api/config'
 
 export default {
+  data() {
+    return {
+      currentSongUrl: '',
+    }
+  },
+  mounted() {
+    // this._getSongUrl(this.currentSong.url)
+  },
   computed: {
     ...mapGetters(['fullScreen', 'playlist', 'currentSong']),
+    ...mapGetters(['fullScreen', 'playlist', 'currentSong', 'playing']),
   },
   methods: {
     back() {
@@ -137,14 +149,41 @@ export default {
       }
     },
     togglePlaying() {},
+    _getSongUrl(url) {
+      getSongUrl(url).then((res) => {
+        if (res.code === CODE_OK) {
+          console.log(res.data)
+          this.currentSongUrl = res.data[0].url
+        }
+      })
+    },
+    togglePlaying() {
+      console.log('src: ' + this.$refs.audio.getAttribute('src'))
+      this.setPlayingState(!this.playing)
+    },
     ...mapMutations({
       setFullScreen: 'SET_FULL_SCREEN',
+      setPlayingState: 'SET_FULL_SCREEN',
     }),
   },
   watch: {
     currentSong() {
       this.$nextTick(() => {
         this.$refs.audio.play()
+        this._getSongUrl(this.currentSong.url)
+        setTimeout(() => {
+          this.$refs.audio.play()
+        }, 400)
+      })
+    },
+    playing(newPlaying) {
+      console.log(newPlaying)
+      this.$nextTick(() => {
+        const audio = this.$refs.audio
+        if (this.$refs.audio.getAttribute('src') === '') {
+          return
+        }
+        newPlaying ? audio.play() : audio.pause()
       })
     },
   },
