@@ -48,7 +48,6 @@
         </div>
       </div>
     </transition>
-    <audio ref="audio" :src="currentSong.url"></audio>
     <audio ref="audio" :src="currentSongUrl"></audio>
     <div class="mini-player" v-show="!fullScreen" @click="open">
       <div class="icon">
@@ -82,7 +81,6 @@ export default {
     // this._getSongUrl(this.currentSong.url)
   },
   computed: {
-    ...mapGetters(['fullScreen', 'playlist', 'currentSong']),
     ...mapGetters(['fullScreen', 'playlist', 'currentSong', 'playing']),
   },
   methods: {
@@ -122,12 +120,10 @@ export default {
       this.$refs.cdWrapper.style.animation = ''
     },
     leave(el, done) {
-      console.log('111')
       this.$refs.cdWrapper.style.transition = 'all 0.4s'
       const { x, y, scale } = this._getPosAndScale()
       this.$refs.cdWrapper.style['transform'] = `translate3d(${x}px, ${y}px,0) scale(${scale})`
       this.$refs.cdWrapper.addEventListener('transitionend', done)
-      console.log({ x, y, scale })
     },
     afterLeave() {
       this.$refs.cdWrapper.style.animation = ''
@@ -148,7 +144,6 @@ export default {
         scale,
       }
     },
-    togglePlaying() {},
     _getSongUrl(url) {
       getSongUrl(url).then((res) => {
         if (res.code === CODE_OK) {
@@ -169,7 +164,6 @@ export default {
   watch: {
     currentSong() {
       this.$nextTick(() => {
-        this.$refs.audio.play()
         this._getSongUrl(this.currentSong.url)
         setTimeout(() => {
           this.$refs.audio.play()
